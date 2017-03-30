@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="None">
+  
+  <link rel="shortcut icon" href="./img/favicon.ico">
+  <title>Home - BespON: Bespoken Object Notation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="./css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="./css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Home";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = "/";
+  </script>
+  
+  <script src="./js/jquery-2.1.1.min.js"></script>
+  <script src="./js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="./js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> BespON: Bespoken Object Notation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href=".">Home</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#bespon-bespoken-object-notation">BespON:  Bespoken Object Notation</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#why">Why?</a></li>
+        
+            <li><a class="toctree-l3" href="#getting-started">Getting started</a></li>
+        
+            <li><a class="toctree-l3" href="#stability">Stability</a></li>
+        
+            <li><a class="toctree-l3" href="#specification">Specification</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="spec_overview/">Spec overview</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">BespON: Bespoken Object Notation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="bespon-bespoken-object-notation">BespON:  Bespoken Object Notation</h1>
+<p>BespON is a configuration language with several unique features.</p>
+<ul>
+<li>
+<p><strong>Multi-paradigm</strong> – Do you like JSON's braces, brackets, and quotation
+    marks?  Would you rather leave out some quotation marks and use
+    significant indentation instead of braces and brackets?  Do you prefer
+    INI-style sections, with no braces or brackets <em>and</em> no indentation?
+    BespON supports all three styles.</p>
+</li>
+<li>
+<p><strong>Extensible</strong> – Support for several standard data types is built in,
+    and other types may be supported soon using tag syntax.</p>
+</li>
+<li>
+<p><strong>Round-trip enabled</strong> – Many config languages lack parsers that can
+    round-trip data.  Loading, modifying, and then saving can change data
+    ordering, resulting in unnecessarily complicated diffs.  Even when a
+    round-trip parser exists, comments may be lost or associated with the
+    wrong data objects.  BespON is designed with round-tripping in mind,
+    including doc comments that are uniquely associated with individual data
+    objects and thus can be preserved through arbitrary data manipulation.</p>
+</li>
+</ul>
+<p>Take a look:</p>
+<pre><code class="text"># Line comments are allowed!  They can be round-tripped as long as data
+# elements are only modified, not added or removed.
+
+### This is a doc comment.  It can always be round-tripped.###
+# Only one doc comment is allowed per object; another couldn't be here.
+
+&quot;quoted key with \x5C escapes&quot; = 'quoted value with \u{5C} escapes'
+
+`literal key without \ escapes` = ``literal value without `\` escapes``
+
+# ASCII identifier-style strings are allowed unquoted.  Keys cannot contain
+# spaces; values can contain single spaces and must be on one line.
+# Unquoted Unicode identifiers can optionally be enabled.
+unquoted_key = unquoted value
+
+inline_dict = {key1 = value1, key2 = value2,}  # Trailing commas are fine.
+
+inline_list_of_ints = [1, 0x12, 0o755, 0b1010]  # Hex, octal, and binary!
+
+list_of_floats =
+  * 1.2e3
+  * -inf  # Full IEEE 754 compatibility.  Infinity and NaN are not excluded.
+  * 0x4.3p2  # Hex floats, to avoid rounding issues.
+
+wrapped_string = &quot;&quot;&quot;string containing no whitespace lines in which line breaks
+    are replaced with spaces, and &quot;quotes&quot; are possible by via delimiters&quot;&quot;&quot;
+
+multiline_literal_string = |```
+        A literal string in which linebreaks are kept (as '\n')
+        and leading indentation (relative to delimiters) is preserved,
+        with special delimiters always on lines by themselves.
+    |```/
+
+multiline_escaped_string = |&quot;&quot;&quot;
+    The same idea as the literal string, but with backslash-escapes.
+    |&quot;&quot;&quot;/
+
+key1.key2 = true  # Key path style; same as &quot;key1 = {key2 = true}&quot;
+
+|=== section.subsection  # Same as &quot;section = {subsection = {key = value}}&quot;
+key = value
+|===/  # Back to root level.  Can be omitted if sections never return to root.
+</code></pre>
+
+<h2 id="why">Why?</h2>
+<p><a href="https://xkcd.com/927/"><img alt="XKCD Standards" src="https://imgs.xkcd.com/comics/standards.png" /></a></p>
+<p>Now the requisite XKCD reference is out of the way, why BespON?</p>
+<ul>
+<li><strong>Comments</strong>.  And doc comments that are uniquely associated with
+    individual data objects, and thus may always be round-tripped correctly.</li>
+<li><strong>Trailing commas</strong>.</li>
+<li><strong>Unquoted strings</strong>.  But only identifier-style strings or unambiguous
+    number-unit style strings (like <code>12pt</code>), and never broken across a line.</li>
+<li><strong>Multiline strings</strong> with indentation preserved <em>relative to delimiters</em>.
+    Multiline strings with obvious leading/trailing whitespace, since it's
+    inside delimiters.</li>
+<li><strong>Integers</strong>.  And integers with various bases (decimal, hex, octal,
+    binary).</li>
+<li><strong>Full IEEE 754 floating point support</strong> (with infinity and NaN),
+    including hex floats for cases when rounding errors aren't acceptable.</li>
+<li><strong>Immutable data object model</strong>.  Duplicate keys are invalid and must
+    result in an error.</li>
+<li><strong>A small list of special characters</strong>.  Every ASCII punctuation character
+    does NOT have its own, special meaning.  No constant wondering about what
+    is allowed unquoted, and if it will appear as itself or something else.</li>
+<li><strong>Sections and key paths</strong> for conveniently representing nested data
+    structures, without ending up with bracket soup or half a page width of
+    indentation.</li>
+<li><strong>"Acceptable" performance</strong> even when completely implemented in an
+    interpreted language.</li>
+</ul>
+<h2 id="getting-started">Getting started</h2>
+<p>A <a href="https://github.com/gpoore/bespon_py">Python implementation</a> is available
+now.  It supports loading and saving data.  Round trip support for modifying
+data is almost complete and is coming very soon.</p>
+<p>There is also a
+<a href="https://github.com/bespon/bespon_tests">language-agnostic test suite</a>,
+which the Python implementation passes.</p>
+<h2 id="stability">Stability</h2>
+<p>All current features are expected to be stable.  The objective is a final
+version 1.0 of the Python implementation by the end of summer 2017.</p>
+<h2 id="specification">Specification</h2>
+<p>A <a href="spec_overview/">brief overview</a> is currently available.  More
+technical details are in the Python implementation, particularly in
+<code>grammar.py</code> and <code>re_patterns.py</code>.  A more formal, more detailed
+specification will follow as soon as the Python implementation is refined
+further.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spec_overview/" class="btn btn-neutral float-right" title="Spec overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+        <span style="margin-left: 15px"><a href="spec_overview/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="./js/theme.js"></script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 0.16.2
+Build Date UTC : 2017-03-30 15:50:41
+-->
