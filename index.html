@@ -144,10 +144,9 @@
 
 `literal key without \ escapes` = ``literal value without `\` escapes``
 
-# ASCII identifier-style strings are allowed unquoted.  Keys cannot contain
-# spaces; values can contain single spaces and must be on one line.
+# ASCII identifier-style strings are allowed unquoted.
 # Unquoted Unicode identifiers can optionally be enabled.
-unquoted_key = unquoted value
+unquoted_key = unquoted_value
 
 inline_dict = {key1 = value1, key2 = value2,}  # Trailing commas are fine.
 
@@ -185,8 +184,7 @@ key = value
 <li><strong>Comments</strong>.  And doc comments that are uniquely associated with
     individual data objects, and thus may always be round-tripped correctly.</li>
 <li><strong>Trailing commas</strong>.</li>
-<li><strong>Unquoted strings</strong>.  But only identifier-style strings or unambiguous
-    number-unit style strings (like <code>12pt</code>), and never broken across a line.</li>
+<li><strong>Unquoted strings</strong>.  But only identifier-style strings.</li>
 <li><strong>Multiline strings</strong> with indentation preserved <em>relative to delimiters</em>.
     Multiline strings with obvious leading/trailing whitespace, since it's
     inside delimiters.</li>
@@ -343,5 +341,5 @@ further.</p>
 
 <!--
 MkDocs version : 0.16.2
-Build Date UTC : 2017-04-03 04:23:35
+Build Date UTC : 2017-04-05 16:12:16
 -->
