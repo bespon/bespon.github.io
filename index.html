@@ -52,7 +52,7 @@
     <a class="current" href=".">Home</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#bespon-bespoken-object-notation">BespON:  Bespoken Object Notation</a></li>
+    <li class="toctree-l2"><a href="#bespon-bespoken-object-notation">BespON – Bespoken Object Notation</a></li>
     
         <ul>
         
@@ -109,91 +109,59 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="bespon-bespoken-object-notation">BespON:  Bespoken Object Notation</h1>
-<p>BespON is a configuration language with several unique features.</p>
+                <h1 id="bespon-bespoken-object-notation">BespON – Bespoken Object Notation</h1>
+<p>BespON is a configuration language that's custom built for the tasks that
+aren't convenient in the other formats.</p>
 <ul>
 <li>
-<p><strong>Multi-paradigm</strong> – Do you like JSON's braces, brackets, and quotation
-    marks?  Would you rather leave out some quotation marks and use
-    significant indentation instead of braces and brackets?  Do you prefer
-    INI-style sections, with no braces or brackets <em>and</em> no indentation?
-    BespON supports all three styles.</p>
+<p><strong>Multi-paradigm</strong> – Do you like braces, brackets, and explicit quotation
+    marks, with no significant whitespace?  Would you rather leave out some
+    quotation marks and use significant indentation instead of braces and
+    brackets?  Do you prefer INI-style sections, with no braces or brackets
+    <em>and</em> no indentation?  BespON supports all three styles.</p>
 </li>
 <li>
-<p><strong>Extensible</strong> – Support for several standard data types is built in,
-    and other types may be supported soon using tag syntax.</p>
+<p><strong>Strings and numbers</strong> – Literal and escaped multiline strings designed
+    for storing template text.  Floats <em>and</em> integers, in multiple bases,
+    with full IEEE 754 support.</p>
 </li>
 <li>
-<p><strong>Round-trip enabled</strong> – Many config languages lack parsers that can
-    round-trip data.  Loading, modifying, and then saving can change data
-    ordering, resulting in unnecessarily complicated diffs.  Even when a
-    round-trip parser exists, comments may be lost or associated with the
-    wrong data objects.  BespON is designed with round-tripping in mind,
-    including doc comments that are uniquely associated with individual data
-    objects and thus can be preserved through arbitrary data manipulation.</p>
+<p><strong>Lossless round tripping</strong> – Designed to be loaded by a computer,
+    modified, and then saved while retaining exact layout, including comments.</p>
 </li>
 </ul>
 <p>Take a look:</p>
-<pre><code class="text"># Line comments are allowed!  They can be round-tripped as long as data
-# elements are only modified, not added or removed.
+<div style="padding: 1em;color: #d4d4d4;background-color: #1e1e1e;font-family: Consolas, 'Courier New', monospace;font-weight: normal;font-size: 14px;line-height: 19px;white-space: pre;"><div><span style="color: #608b4e;"># Line comments are allowed!  They can be round-tripped as long as data</span></div><div><span style="color: #608b4e;"># elements are only modified, not added or removed.</span></div><br><div><span style="color: #608b4e;">### This is a doc comment.  It can always be round-tripped.###</span></div><div><span style="color: #608b4e;"># Only one doc comment is allowed per object; another couldn't be here.</span></div><br><div><span style="color: #ce9178;">"quoted key with \x5C escapes"</span><span style="color: #d4d4d4;"> = </span><span style="color: #ce9178;">'quoted value with \u{5C} escapes'</span></div><br><div><span style="color: #ce9178;">`literal key without \ escapes`</span><span style="color: #d4d4d4;"> = </span><span style="color: #ce9178;">``literal value without `\` escapes``</span></div><br><div><span style="color: #608b4e;"># ASCII identifier-style strings are allowed unquoted.</span></div><div><span style="color: #608b4e;"># Unquoted Unicode identifiers can optionally be enabled.</span></div><div><span style="color: #ce9178;">unquoted_key</span><span style="color: #d4d4d4;"> = </span><span style="color: #ce9178;">unquoted_value</span></div><br><div><span style="color: #ce9178;">inline_dict</span><span style="color: #d4d4d4;"> = {</span><span style="color: #ce9178;">key1</span><span style="color: #d4d4d4;"> = </span><span style="color: #ce9178;">value1</span><span style="color: #d4d4d4;">, </span><span style="color: #ce9178;">key2</span><span style="color: #d4d4d4;"> = </span><span style="color: #ce9178;">value2</span><span style="color: #d4d4d4;">,}  </span><span style="color: #608b4e;"># Trailing commas are fine.</span></div><br><div><span style="color: #ce9178;">inline_list_of_ints</span><span style="color: #d4d4d4;"> = [</span><span style="color: #b5cea8;">1</span><span style="color: #d4d4d4;">, </span><span style="color: #569cd6;">0x</span><span style="color: #b5cea8;">12</span><span style="color: #d4d4d4;">, </span><span style="color: #569cd6;">0o</span><span style="color: #b5cea8;">755</span><span style="color: #d4d4d4;">, </span><span style="color: #569cd6;">0b</span><span style="color: #b5cea8;">1010</span><span style="color: #d4d4d4;">]  </span><span style="color: #608b4e;"># Hex, octal, and binary!</span></div><br><div><span style="color: #ce9178;">list_of_floats</span><span style="color: #d4d4d4;"> =</span></div><div><span style="color: #d4d4d4;">  * </span><span style="color: #b5cea8;">1.2e3</span></div><div><span style="color: #d4d4d4;">  * </span><span style="color: #b5cea8;">-inf</span><span style="color: #d4d4d4;">  </span><span style="color: #608b4e;"># Full IEEE 754 compatibility.  Infinity and NaN are not excluded.</span></div><div><span style="color: #d4d4d4;">  * </span><span style="color: #569cd6;">0x</span><span style="color: #b5cea8;">4.3p2</span><span style="color: #d4d4d4;">  </span><span style="color: #608b4e;"># Hex floats, to avoid rounding issues.</span></div><br><div><span style="color: #ce9178;">wrapped_string</span><span style="color: #d4d4d4;"> = </span><span style="color: #ce9178;">"""string containing no whitespace lines in which line breaks</span></div><div><span style="color: #ce9178;">    are replaced with spaces, and "quotes" are possible by via delimiters"""</span></div><br><div><span style="color: #ce9178;">multiline_literal_string</span><span style="color: #d4d4d4;"> = </span><span style="color: #ce9178;">|```</span></div><div><span style="color: #ce9178;">        A literal string in which linebreaks are kept (as '\n')</span></div><div><span style="color: #ce9178;">        and leading indentation (relative to delimiters) is preserved,</span></div><div><span style="color: #ce9178;">        with special delimiters always on lines by themselves.</span></div><div><span style="color: #ce9178;">    |```/</span></div><br><div><span style="color: #ce9178;">multiline_escaped_string</span><span style="color: #d4d4d4;"> = </span><span style="color: #ce9178;">|"""</span></div><div><span style="color: #ce9178;">    The same idea as the literal string, but with backslash-escapes.</span></div><div><span style="color: #ce9178;">    |"""/</span></div><br><div><span style="color: #ce9178;">key1</span><span style="color: #d4d4d4;">.</span><span style="color: #ce9178;">key2</span><span style="color: #d4d4d4;"> = </span><span style="color: #569cd6;">true</span><span style="color: #d4d4d4;">  </span><span style="color: #608b4e;"># Key path style; same as "key1 = {key2 = true}"</span></div><br><div><span style="color: #d4d4d4;">|=== </span><span style="color: #ce9178;">section</span><span style="color: #d4d4d4;">.</span><span style="color: #ce9178;">subsection</span><span style="color: #d4d4d4;">  </span><span style="color: #608b4e;"># Same as "section = {subsection = {key = value}}"</span></div><div><span style="color: #ce9178;">key</span><span style="color: #d4d4d4;"> = </span><span style="color: #ce9178;">value</span></div><div><span style="color: #d4d4d4;">|===/  </span><span style="color: #608b4e;"># Back to root level.  Can be omitted if sections never return to root.</span></div><br></div>
 
-### This is a doc comment.  It can always be round-tripped.###
-# Only one doc comment is allowed per object; another couldn't be here.
-
-&quot;quoted key with \x5C escapes&quot; = 'quoted value with \u{5C} escapes'
-
-`literal key without \ escapes` = ``literal value without `\` escapes``
-
-# ASCII identifier-style strings are allowed unquoted.
-# Unquoted Unicode identifiers can optionally be enabled.
-unquoted_key = unquoted_value
-
-inline_dict = {key1 = value1, key2 = value2,}  # Trailing commas are fine.
-
-inline_list_of_ints = [1, 0x12, 0o755, 0b1010]  # Hex, octal, and binary!
-
-list_of_floats =
-  * 1.2e3
-  * -inf  # Full IEEE 754 compatibility.  Infinity and NaN are not excluded.
-  * 0x4.3p2  # Hex floats, to avoid rounding issues.
-
-wrapped_string = &quot;&quot;&quot;string containing no whitespace lines in which line breaks
-    are replaced with spaces, and &quot;quotes&quot; are possible by via delimiters&quot;&quot;&quot;
-
-multiline_literal_string = |```
-        A literal string in which linebreaks are kept (as '\n')
-        and leading indentation (relative to delimiters) is preserved,
-        with special delimiters always on lines by themselves.
-    |```/
-
-multiline_escaped_string = |&quot;&quot;&quot;
-    The same idea as the literal string, but with backslash-escapes.
-    |&quot;&quot;&quot;/
-
-key1.key2 = true  # Key path style; same as &quot;key1 = {key2 = true}&quot;
-
-|=== section.subsection  # Same as &quot;section = {subsection = {key = value}}&quot;
-key = value
-|===/  # Back to root level.  Can be omitted if sections never return to root.
-</code></pre>
-
+<p><br></p>
 <h2 id="why">Why?</h2>
 <p><a href="https://xkcd.com/927/"><img alt="XKCD Standards" src="https://imgs.xkcd.com/comics/standards.png" /></a></p>
-<p>Now the requisite XKCD reference is out of the way, why BespON?</p>
+<p>Now that the requisite XKCD reference is out of the way, why BespON?</p>
 <ul>
-<li><strong>Comments</strong>.  And doc comments that are uniquely associated with
-    individual data objects, and thus may always be round-tripped correctly.</li>
+<li><strong>Comments</strong>.  Instead of not having comments.  Normal comments aren't
+    uniquely associated with individual data elements (or necessarily with
+    data at all), so BespON also provides doc comments.  Only one doc comment
+    is allowed per data element.  This brings the possibility of round
+    tripping with arbitrary data manipulation while retaining all (doc)
+    comments.</li>
 <li><strong>Trailing commas</strong>.</li>
-<li><strong>Unquoted strings</strong>.  But only identifier-style strings.</li>
-<li><strong>Multiline strings</strong> with indentation preserved <em>relative to delimiters</em>.
-    Multiline strings with obvious leading/trailing whitespace, since it's
-    inside delimiters.</li>
+<li><strong>Unquoted strings</strong>.  But only identifier-style strings, and only strings
+    that do NOT match reserved words like <code>true</code> under any capitalization.</li>
+<li><strong>Consistent reserved words</strong>.  <code>true</code> is <em>always</em> boolean True.  It isn't
+    boolean True or the string "true" depending on whether it happens to
+    appear as a dict key or as a dict value.</li>
+<li><strong>Multiline strings</strong> that take into account the needs of storing template
+    text.  Indentation is preserved <em>relative to delimiters</em>.
+    Leading/trailing whitespace is obvious, since it's inside delimiters.
+    Opening delimiters are different than closing delimiters, so it's easy to
+    distinguish the start of a multiline string from the end when working with
+    long templates.</li>
 <li><strong>Integers</strong>.  And integers with various bases (decimal, hex, octal,
     binary).</li>
-<li><strong>Full IEEE 754 floating point support</strong> (with infinity and NaN),
+<li><strong>Full IEEE 754 floating point support</strong> with Infinity and NaN,
     including hex floats for cases when rounding errors aren't acceptable.</li>
-<li><strong>Immutable data object model</strong>.  Duplicate keys are invalid and must
-    result in an error.</li>
+<li><strong>Immutable data object model</strong>.  Duplicate keys in dicts are invalid and
+    must result in an error.</li>
 <li><strong>A small list of special characters</strong>.  Every ASCII punctuation character
     does NOT have its own, special meaning.  No constant wondering about what
     is allowed unquoted, and if it will appear as itself or something else.</li>
@@ -201,13 +169,13 @@ key = value
     structures, without ending up with bracket soup or half a page width of
     indentation.</li>
 <li><strong>"Acceptable" performance</strong> even when completely implemented in an
-    interpreted language.  (See the benchmarks below.)</li>
+    interpreted language (see the benchmarks below).</li>
 </ul>
 <h2 id="getting-started">Getting started</h2>
 <p>A <a href="https://github.com/gpoore/bespon_py"><strong>Python implementation</strong></a> is available
-now.  It supports loading and saving data.</p>
-<p>There is also round trip support for changing the values of strings, floats,
-ints, and bools.  For example,</p>
+now.  It supports loading and saving data.  There is also round trip support
+for changing the values of strings, floats, ints, and bools (changing types
+is not currently supported).  For example,</p>
 <pre><code>&gt;&gt;&gt; import bespon
 &gt;&gt;&gt; ast = bespon.loads_roundtrip_ast(&quot;&quot;&quot;
 key.subkey.first = 123   # Comment
@@ -225,7 +193,7 @@ key.sk.second = 0b111
 key.sk.fourth = `\another \literal`
 </code></pre>
 
-<p>This example illustrates several of the round trip capabilities.</p>
+<p>This illustrates several of the round trip capabilities.</p>
 <ul>
 <li>Comments and layout are preserved exactly.</li>
 <li>Key renaming works with key paths.  Every time a key appears in key paths,
@@ -247,11 +215,11 @@ which the Python implementation passes.</p>
 <h2 id="benchmarks">Benchmarks</h2>
 <p>One of the goals for BespON is "acceptable" performance even when completely
 implemented in an interpreted language.  So far, the pure Python
-implementation is promising.  It only contains minimal optimizations
+implementation is promising.  It contains minimal optimizations
 (avoidance of globals, use of <code>__slots__</code>), and has significant overhead
 since it saves detailed source information about each data object to support
 round tripping.  In spite of this, under CPython it can be only about 2 times
-slower than LibYAML, the <em>C implementation</em> of YAML.  Under
+slower than PyYAML using LibYAML, the <em>C implementation</em> of YAML.  Under
 <a href="http://pypy.org/">PyPy</a>, the pure Python implementation can actually be
 significantly faster than LibYAML.  An implementation of BespON that left out
 the round-trip data, or used <a href="http://cython.org/">Cython</a>, could likely be
@@ -345,5 +313,5 @@ further.</p>
 
 <!--
 MkDocs version : 0.16.2
-Build Date UTC : 2017-04-06 05:30:44
+Build Date UTC : 2017-04-07 03:47:55
 -->

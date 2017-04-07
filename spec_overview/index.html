@@ -57,7 +57,7 @@
     <a class="current" href="./">Spec overview</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#bespon-specification-overview">BespON Specification Overview</a></li>
+    <li class="toctree-l2"><a href="#bespon-specification">BespON Specification</a></li>
     
         <ul>
         
@@ -123,7 +123,7 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="bespon-specification-overview">BespON Specification Overview</h1>
+                <h1 id="bespon-specification">BespON Specification</h1>
 <p>This is an overview of the BespON specification.  A more formal,
 more detailed specification will follow as soon as the Python implementation
 is refined further.  More details are available in the Python implementation,
@@ -162,14 +162,14 @@ and may only be transmitted in backslash-escaped form within strings.</p>
 <code>none</code> are invalid and must produce errors.  Unlike YAML, uppercase and
 titlecase variants of reserved words are NOT equivalent to their lowercase
 versions, and other capitalization variants are NOT valid unquoted strings.
-The literal string <code>none</code>, in any capitalization, can only be represented by
+The literal string "none", in any capitalization, can only be represented by
 using a quoted string.</p>
 <h2 id="bool">Bool</h2>
 <p>Boolean values are represented as <code>true</code> and <code>false</code>.  As with <code>none</code>, all
 other capitalizations are invalid and must produce errors.  The only way
-to obtain the literal strings <code>true</code> and <code>false</code>, in any capitalization, is
-to use quoted strings.  Unlike TOML, boolean literals have a constant type
-in all contexts; they are not strings when used as dict keys, but booleans
+to obtain the literal strings "true" and "false", in any capitalization, is
+to use quoted strings.  Unlike TOML, the meanings of <code>true</code> and <code>false</code> are
+NOT context-dependent; they are not strings when used as dict keys, but booleans
 when used as dict values.</p>
 <h2 id="numbers">Numbers</h2>
 <h3 id="integers">Integers</h3>
@@ -198,7 +198,7 @@ number to which it belongs is prohibited.</p>
 <p>Implementations are expected to use float types compatible with IEEE 754
 binary64.</p>
 <p>Infinity is represented as <code>inf</code>, and not a number as <code>nan</code>.  All other
-capitalizations are invalid, and the literal strings <code>inf</code> and <code>nan</code> require
+capitalizations are invalid, and the literal strings "inf" and "nan" require
 quoted strings.</p>
 <h2 id="unicode-strings">Unicode strings</h2>
 <p>Unicode normalization is not performed on the Unicode string type, to avoid
@@ -230,8 +230,8 @@ A string that starts with one quotation mark <code>'</code> or <code>"</code> en
 identical quotation mark that is not backslash-escaped.  The sequences <code>''</code>
 and <code>""</code> represent the empty string.  Longer delimiter sequences such as
 <code>'''</code> and <code>"""</code> may be used to include any unescaped delimiter sequence that
-is shorter or longer than the delimiters.  Such sequences must be multiples
-of 3 characters in length and no longer than 90 characters.</p>
+is shorter or longer than the delimiters.  Such delimiter sequences must be
+multiples of 3 characters in length and no longer than 90 characters.</p>
 <p>Strings delimited by backticks begin with a delimiter sequence of length
 1, 2, 3, or a multiple of 3 no longer than 90 characters, and end when the
 same delimiter sequence is next encountered.  This is similar to Markdown.
@@ -242,11 +242,11 @@ for example, the sequence <code>`` ` ``</code> to represent the single
 backtick <code>`</code>.</p>
 <p>Inline quoted strings may be wrapped over multiple lines.  When this is done,
 the indentation of the first continuation line must be equal to or greater
-than that of the line on which it begins, and any subsequent continuation
-lines must have that same indentation.  Wrapped quoted strings are unwrapped
-by replacing each line break with a space if the last character before the
-break does not have the Unicode property <code>White_Space</code>, and simply stripping
-breaks otherwise.</p>
+than that of the line on which the string begins, and any subsequent
+continuation lines must have that same indentation.  Wrapped quoted strings
+are unwrapped by replacing each line break with a space if the last character
+before the break does not have the Unicode property <code>White_Space</code>, and simply
+stripping breaks otherwise.</p>
 <h3 id="quoted-block-strings">Quoted block strings</h3>
 <p>Quoted block strings preserve literal line breaks and indentation relative to
 the closing delimiter.  They start with a pipe <code>|</code> followed by a sequence of
@@ -299,6 +299,18 @@ then the <code>*</code> is ignored in calculating the total indentation; otherwi
 is treated as equivalent to a space.  In indentation-based syntax, all <code>*</code>
 in a list must have the same indentation, and all objects that follow them
 must also have the same indentation.</p>
+<p>When a list is within a list, each successive asterisk must be on a new line.
+Thus,</p>
+<pre><code class="text">*
+  * text
+</code></pre>
+
+<p>is equivalent to</p>
+<pre><code class="text">[[text]]
+</code></pre>
+
+<p>An asterisk cannot be used alone without a following object to represent the
+empty list.  The empty list must always be represented explicitly as <code>[]</code>.</p>
 <p>There is also a more compact, inline syntax for lists, in which the list is
 delimited by square brackets <code>[...]</code> and individual list elements are
 separated by commas.  For example,</p>
@@ -398,7 +410,7 @@ since that is outside the scope.</p>
 <h2 id="sections">Sections</h2>
 <p>Sections provide a way to use indentation-based syntax without using
 deep indentation.  A section is started by a pipe <code>|</code> followed by a sequence
-of equals signs whose length is a multiple of 3 and is no longer than 90
+of equals signs <code>=</code> whose length is a multiple of 3 and is no longer than 90
 characters.  This is followed by a key path or a key, which must terminate
 on the line where the key path begins (line breaks are not permitted).
 Everything after the section start is included under the specified key path
@@ -476,13 +488,13 @@ data as opposed to text context, and provide a useful rendering.  Given that
 this will rarely be possible, the next best thing would be to require that
 right-to-left code points only appear in contexts in which this sort of
 key-value reversal in visual rendering is not possible.</p>
-<p>By default, whenever a string contains code points with Unicode
-<code>Bidi_Class</code> R or AL on its last line, no string or number is allowed to
-follow it on that line.  Any following object must be on a subsequent line,
-to avoid the potential of confusion due to bidirectional rendering.  Such
-a string may still be followed by a comma <code>,</code>, bracket <code>]</code>, brace <code>}</code>,
-equals sign <code>=</code>, or other non-string, non-digit element, since this will not
-introduce the possibility of ambiguous rendering.</p>
+<p>By default, whenever a string contains code points with Unicode <code>Bidi_Class</code> R
+or AL on its last line, no string, number, or comment is allowed to follow it
+on that line.  Any following object must be on a subsequent line, to avoid the
+potential of confusion due to bidirectional rendering.  Such a string may
+still be followed by a comma <code>,</code>, bracket <code>]</code>, brace <code>}</code>, equals sign <code>=</code>, or
+other non-string, non-digit element, since this will not introduce the
+possibility of ambiguous rendering.</p>
 <h2 id="comments">Comments</h2>
 <p>Comments come in two forms.</p>
 <p>Line comments start with a single number sign <code>#</code> that is not followed
