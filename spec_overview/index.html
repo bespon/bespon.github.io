@@ -85,6 +85,8 @@
         
             <li><a class="toctree-l3" href="#comments">Comments</a></li>
         
+            <li><a class="toctree-l3" href="#roadmap">Roadmap</a></li>
+        
         </ul>
     
 
@@ -445,10 +447,10 @@ signs <code>=</code> in the closing element must match the number used to open t
 section.  Furthermore, if the closing element is ever used, then ALL sections
 must be closed explicitly.</p>
 <h2 id="tags">Tags</h2>
-<p>All types discussed thus far are implicitly typed.  BespON also provides for
-explicitly typed objects, with the tagging syntax <code>(tag)&gt;</code>.  Support for
-tags and associated binary types will be added to the Python implementation
-soon.</p>
+<p>BespON provides for explicitly typed objects, with the tagging syntax
+<code>(tag)&gt;</code>.  Support for tags will be added to the Python implementation soon.
+By default, tags will only be used to support binary types and perhaps a few
+other types beyond those already discussed.</p>
 <p>Tag syntax makes possible byte strings.</p>
 <pre><code class="text">(bytes)&gt; 'Some text'
 </code></pre>
@@ -458,8 +460,8 @@ soon.</p>
 * (base64)&gt; 'U29tZSB0ZXh0'
 </code></pre>
 
-<p>Tag syntax will eventually provide support for additional types, and provide
-an optional extension mechanism for user-defined types.</p>
+<p>Tag syntax will eventually provide an optional extension mechanism for
+user-defined types.</p>
 <h2 id="right-to-left-code-points">Right-to-left code points</h2>
 <p>BespON is intended for human editing.  This can be difficult with
 code points from right-to-left languages (code points with Unicode
@@ -529,6 +531,15 @@ These can contain empty lines.
 <p>The rules about indentation-based syntax apply to these as well.</p>
 <p>Because doc comments are uniquely associated with individual data objects,
 they may survive round tripping even when data is added or removed.</p>
+<h2 id="roadmap">Roadmap</h2>
+<p>Some possible features are still under consideration, and may be added either
+as required features or as optional extensions.</p>
+<ul>
+<li>Support for labeling values in dicts or elements in lists, and then
+    referring to them elsewhere by label to create aliases or copies.</li>
+<li>Support for a dict to inherit initial values or default fallback values
+    from another dict.  Support for dict merging.</li>
+</ul>
               
             </div>
           </div>
