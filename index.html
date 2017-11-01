@@ -8,7 +8,7 @@
   <meta name="description" content="None">
   
   <link rel="shortcut icon" href="./img/favicon.ico">
-  <title>Home - BespON: Bespoken Object Notation</title>
+  <title>BespON – Bespoken Object Notation - BespON: Bespoken Object Notation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="./css/theme.css" type="text/css" />
@@ -17,7 +17,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Home";
+    var mkdocs_page_name = "BespON \u2013 Bespoken Object Notation";
     var mkdocs_page_input_path = "index.md";
     var mkdocs_page_url = "/";
   </script>
@@ -49,7 +49,7 @@
           
             <li class="toctree-l1 current">
 		
-    <a class="current" href=".">Home</a>
+    <a class="current" href=".">BespON – Bespoken Object Notation</a>
     <ul class="subnav">
             
     <li class="toctree-l2"><a href="#bespon-bespoken-object-notation">BespON – Bespoken Object Notation</a></li>
@@ -99,7 +99,7 @@
     
       
     
-    <li>Home</li>
+    <li>BespON – Bespoken Object Notation</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -170,6 +170,12 @@ and number support, and lossless round-tripping.</p>
 <li><strong>Sections and key paths</strong> for conveniently representing nested data
     structures, without ending up with bracket soup or half a page width of
     indentation.</li>
+<li><strong>Inheritance</strong>.  Shared default or fallback values only need to be
+    specified once.</li>
+<li><strong>Optional support for aliases and circular references</strong> to avoid data
+    duplication and allow complex data relationships.</li>
+<li><strong>Round-trip support.</strong> Programmatically replace keys or values, or access
+    or even modify comments – while keeping <em>all</em> layout and comments.</li>
 <li><strong>"Acceptable" performance</strong> even when completely implemented in an
     interpreted language (see the <a href=".#benchmarks">benchmarks</a>).</li>
 </ul>
@@ -180,8 +186,8 @@ now.  It may be installed via</p>
 </code></pre>
 
 <p>The <code>bespon</code> package for Python supports loading and saving data.  There is
-also round-trip support for changing the values of strings, floats, ints, and
-bools (changing types is not currently supported).  For example,</p>
+also round-trip support for modifying keys and values while keeping formatting
+and comments.  For example,</p>
 <pre><code>&gt;&gt;&gt; import bespon
 &gt;&gt;&gt; ast = bespon.loads_roundtrip_ast(&quot;&quot;&quot;
 key.subkey.first = 123   # Comment
@@ -211,6 +217,26 @@ key.sk.fourth = `\another \literal`
 <li>As soon as a key is modified, the new key must be used for further
     modifications.  The old key is invalid.</li>
 </ul>
+<p>The <a href="https://github.com/gpoore/bespon_py">development version</a> of the <code>bespon</code>
+package already provides several additional round-trip features that are
+being refined for the next release.  For example,</p>
+<pre><code>&gt;&gt;&gt; ast = bespon.loads_roundtrip_ast(&quot;&quot;&quot;
+### key doc comment ###
+key =  # key trailing comment
+    value  # value trailing comment
+&quot;&quot;&quot;)
+&gt;&gt;&gt; ast['key'].key = 'new_key'
+&gt;&gt;&gt; ast['new_key'].key_doc_comment = ' new key doc '
+&gt;&gt;&gt; ast['new_key'].key_trailing_comment = ' key trailing...'
+&gt;&gt;&gt; ast['new_key'].value = 'val'
+&gt;&gt;&gt; ast['new_key'].value_trailing_comment = ' val trailing...'
+&gt;&gt;&gt; print(ast.dumps())
+
+### new key doc ###
+new_key =  # key trailing...
+    val  # val trailing...
+</code></pre>
+
 <p>There is a
 <a href="https://github.com/bespon/bespon_vscode"><strong>syntax highlighting extension</strong></a>
 for Visual Studio Code.  It has been posted to the Visual Studio Marketplace,
@@ -245,8 +271,8 @@ does indicate that BespON performance can be competitive with that of similar
 formats.</p>
 <h2 id="stability">Stability</h2>
 <p>While changes are still possible, all current features are expected to be
-stable.  The objective is a final version 1.0 of the Python implementation by
-the end of summer 2017.</p>
+stable.  Development is currently focused on refining existing features and
+adding more powerful round-trip functionality.</p>
 <h2 id="specification">Specification</h2>
 <p>A <a href="spec_overview/">brief overview</a> is currently available.  More
 technical details are in the Python implementation, particularly in
@@ -275,12 +301,12 @@ further.</p>
 
   Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-	  
+      
         </div>
       </div>
 
     </section>
-    
+
   </div>
 
   <div class="rst-versions" role="note" style="cursor: pointer">
@@ -292,12 +318,15 @@ further.</p>
       
     </span>
 </div>
+    <script>var base_url = '.';</script>
     <script src="./js/theme.js"></script>
+      <script src="./search/require.js"></script>
+      <script src="./search/search.js"></script>
 
 </body>
 </html>
 
 <!--
-MkDocs version : 0.16.2
-Build Date UTC : 2017-06-09 02:35:36
+MkDocs version : 0.17.1
+Build Date UTC : 2017-11-01 01:57:25
 -->

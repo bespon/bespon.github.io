@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Spec overview - BespON: Bespoken Object Notation</title>
+  <title>BespON Specification - BespON: Bespoken Object Notation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,7 +17,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Spec overview";
+    var mkdocs_page_name = "BespON Specification";
     var mkdocs_page_input_path = "spec_overview.md";
     var mkdocs_page_url = "/spec_overview/";
   </script>
@@ -49,12 +49,12 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="..">Home</a>
+    <a class="" href="..">BespON – Bespoken Object Notation</a>
 	    </li>
           
             <li class="toctree-l1 current">
 		
-    <a class="current" href="./">Spec overview</a>
+    <a class="current" href="./">BespON Specification</a>
     <ul class="subnav">
             
     <li class="toctree-l2"><a href="#bespon-specification">BespON Specification</a></li>
@@ -121,7 +121,7 @@
     
       
     
-    <li>Spec overview</li>
+    <li>BespON Specification</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -227,7 +227,8 @@ and U+FFA0 (which typically are rendered as whitespace).  This is not the
 default because of the confusability and security implications of using
 unquoted non-ASCII code points.</p>
 <p>Implementations should also provide an option to disable unquoted strings.
-This can be useful when it is desirable to avoid any potential for ambiguity.</p>
+This can be useful when it is desirable to avoid absolutely any potential for
+ambiguity.</p>
 <h3 id="quoted-inline-strings">Quoted inline strings</h3>
 <p>Quoted inline strings are delimited with one or more single quotation marks
 <code>'</code>, double quotation marks <code>"</code>, or backticks <code>`</code>.</p>
@@ -503,6 +504,9 @@ harder for a user to determine whether duplicate keys exist.  It would
 also make <code>$alias.key.subkey</code> syntax ambiguous.  (Is it a single key
 located at <code>$alias.key.subkey</code>, or a key path consisting of <code>$alias</code> followed
 by <code>key.subkey</code>?)</p>
+<p>By default, implementations must check for circular references and raise an
+error when they are detected.  Implementations should provide optional support
+for circular references.</p>
 <h2 id="tags">Tags</h2>
 <p>BespON provides for explicitly typed objects, with the tagging syntax
 <code>(tag)&gt;</code>.  By default, tags will only be used to support binary types and
@@ -703,8 +707,11 @@ they may survive round-tripping even when data is added or removed.</p>
 <h2 id="extended-types">Extended types</h2>
 <p>An implementation may provide optional, non-default support for additional
 types.  The exact set of recommended optional types, and their precise
-definition, may be revised in the future; this is not guaranteed to be
-stable.</p>
+definition, may be revised in the future; this is not guaranteed to be stable.
+Even once the set of recommended optional types stabilizes, implementations
+may support additional, optional, language-specific data types that are in
+common use; for example, the Python implementation provides optional support
+for tuples.</p>
 <h3 id="numbers_1">Numbers</h3>
 <ul>
 <li><strong>Rational number literals</strong> use the form <code>1/2</code>, where the numerator and
@@ -743,7 +750,7 @@ as required features or as optional extensions.</p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href=".." class="btn btn-neutral" title="BespON – Bespoken Object Notation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -757,12 +764,12 @@ as required features or as optional extensions.</p>
 
   Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-	  
+      
         </div>
       </div>
 
     </section>
-    
+
   </div>
 
   <div class="rst-versions" role="note" style="cursor: pointer">
@@ -774,7 +781,10 @@ as required features or as optional extensions.</p>
       
     </span>
 </div>
+    <script>var base_url = '..';</script>
     <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
 
 </body>
 </html>
