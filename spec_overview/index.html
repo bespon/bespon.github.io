@@ -7,24 +7,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
+  
   <link rel="shortcut icon" href="../img/favicon.ico">
   <title>BespON Specification - BespON: Bespoken Object Notation</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="../css/highlight.css">
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   
   <script>
     // Current page data
     var mkdocs_page_name = "BespON Specification";
     var mkdocs_page_input_path = "spec_overview.md";
-    var mkdocs_page_url = "/spec_overview/";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="../js/jquery-2.1.1.min.js"></script>
-  <script src="../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -34,74 +36,91 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href=".." class="icon icon-home"> BespON: Bespoken Object Notation</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="..">BespON – Bespoken Object Notation</a>
-	    </li>
-          
-            <li class="toctree-l1 current">
-		
-    <a class="current" href="./">BespON Specification</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#bespon-specification">BespON Specification</a></li>
-    
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">BespON – Bespoken Object Notation</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">BespON Specification</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#file-format">File format</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#none-type">None type</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bool">Bool</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#numbers">Numbers</a>
         <ul>
-        
-            <li><a class="toctree-l3" href="#file-format">File format</a></li>
-        
-            <li><a class="toctree-l3" href="#none-type">None type</a></li>
-        
-            <li><a class="toctree-l3" href="#bool">Bool</a></li>
-        
-            <li><a class="toctree-l3" href="#numbers">Numbers</a></li>
-        
-            <li><a class="toctree-l3" href="#unicode-strings">Unicode strings</a></li>
-        
-            <li><a class="toctree-l3" href="#indentation">Indentation</a></li>
-        
-            <li><a class="toctree-l3" href="#lists">Lists</a></li>
-        
-            <li><a class="toctree-l3" href="#dicts">Dicts</a></li>
-        
-            <li><a class="toctree-l3" href="#key-paths">Key paths</a></li>
-        
-            <li><a class="toctree-l3" href="#sections">Sections</a></li>
-        
-            <li><a class="toctree-l3" href="#aliases">Aliases</a></li>
-        
-            <li><a class="toctree-l3" href="#tags">Tags</a></li>
-        
-            <li><a class="toctree-l3" href="#right-to-left-code-points">Right-to-left code points</a></li>
-        
-            <li><a class="toctree-l3" href="#comments">Comments</a></li>
-        
-            <li><a class="toctree-l3" href="#extended-types">Extended types</a></li>
-        
-            <li><a class="toctree-l3" href="#roadmap">Roadmap</a></li>
-        
+    <li class="toctree-l3"><a class="reference internal" href="#integers">Integers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#floats">Floats</a>
+    </li>
         </ul>
-    
-
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#unicode-strings">Unicode strings</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#unquoted-strings">Unquoted strings</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#quoted-inline-strings">Quoted inline strings</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#quoted-multiline-strings">Quoted multiline strings</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#indentation">Indentation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lists">Lists</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dicts">Dicts</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-paths">Key paths</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sections">Sections</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#aliases">Aliases</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tags">Tags</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#binary-types">Binary types</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#labels">Labels</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#strings">Strings</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#inheritance">Inheritance</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#right-to-left-code-points">Right-to-left code points</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#comments">Comments</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#extended-types">Extended types</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#numbers_1">Numbers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#collections">Collections</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#roadmap">Roadmap</a>
+    </li>
     </ul>
-	    </li>
-          
-        </ul>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -126,6 +145,7 @@
       
     </li>
   </ul>
+  
   <hr/>
 </div>
           <div role="main">
@@ -238,12 +258,20 @@ quotation marks.  Escapes of the forms <code>\xHH</code>, <code>\uHHHH</code>, <
 characters must have the same case (uppercase or lowercase) within a given
 escape.</p>
 <p>Strings delimited by single and double quotation marks follow the same rules.
-A string that starts with one quotation mark <code>'</code> or <code>"</code> ends at the next
+A string delimited by only one quotation mark <code>'</code> or <code>"</code> begins immediately
+after the opening quotation mark and ends immediately before the next
 identical quotation mark that is not backslash-escaped.  The sequences <code>''</code>
-and <code>""</code> represent the empty string.  Longer delimiter sequences such as
-<code>'''</code> and <code>"""</code> may be used to include any unescaped delimiter sequence that
-is shorter or longer than the delimiters.  Such delimiter sequences must be
-multiples of 3 characters in length and no longer than 90 characters.</p>
+and <code>""</code> represent the empty string.  Longer delimiter sequences such as <code>'''</code>
+and <code>"""</code> can be used to minimize the need for backslash escapes.  Such
+delimiter sequences must be multiples of 3 characters in length and no longer
+than 90 characters.  The string begins immediately after the opening delimiter
+sequence and ends immediately before the next occurrence of the sequence that
+is not backslash-escaped and is not part of a longer sequence of the delimiter
+character.  A string using these longer delimiters can include any unescaped
+sequence of the delimiter character that is shorter or longer than the
+delimiter sequence, with one exception.  The first and last characters in a
+string must be backslash-escaped if they are the delimiter character.  This
+prevents any ambiguity about the beginning and end of the string.</p>
 <p>Strings delimited by backticks begin with a delimiter sequence of length
 1, 2, 3, or a multiple of 3 no longer than 90 characters, and end when the
 same delimiter sequence is next encountered.  This is similar to Markdown.
@@ -762,7 +790,7 @@ as required features or as optional extensions.</p>
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -772,7 +800,7 @@ as required features or as optional extensions.</p>
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+  <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
@@ -782,9 +810,13 @@ as required features or as optional extensions.</p>
     </span>
 </div>
     <script>var base_url = '..';</script>
-    <script src="../js/theme.js"></script>
-      <script src="../search/require.js"></script>
-      <script src="../search/search.js"></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>
